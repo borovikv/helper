@@ -49,7 +49,7 @@ def create_table(input_file: str, from_date: datetime.datetime, to_date: datetim
     return dict(result)
 
 
-def create_timetracking_report(from_date: str = None, to_date: str = None):
+def create_timetracking_report(input_file, from_date: str = None, to_date: str = None):
     now = datetime.datetime.now()
 
     if not to_date:
@@ -62,7 +62,7 @@ def create_timetracking_report(from_date: str = None, to_date: str = None):
     else:
         from_date = dtparse.parse(from_date)
 
-    tickets = create_table('/home/vborovic/Downloads/backup_20161018_154239.csv', from_date, to_date)
+    tickets = create_table(input_file, from_date, to_date)
     total = sum([t for _, d in tickets.items() for _, t in d['timetracking'].items()])
     s = render_to_response('timetracking.html',
                            {'tickets': tickets, 'total': total, 'from_date': from_date, 'to_date': to_date})
@@ -76,6 +76,7 @@ def create_timetracking_report(from_date: str = None, to_date: str = None):
 
 def get_blocks_values_from_command_line():
     parser = argparse.ArgumentParser()
+    parser.add_argument('input_file', type=str)
     parser.add_argument('--from_date', type=str)
     parser.add_argument('--to_date', type=str)
     return vars(parser.parse_args())
