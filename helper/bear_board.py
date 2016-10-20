@@ -1,12 +1,12 @@
 import argparse
-import os
+
 from collections import defaultdict
 
-from jinja2 import Environment, FileSystemLoader
 
 import helper.emailer as emailer
 import helper.jira_helper as jira_helper
 from helper import settings
+from helper.template_utils import render_to_response
 
 
 def is_last_week_day():
@@ -35,13 +35,8 @@ def create_message(*issues, is_html=True):
             'summary': tickets_info[ticket_id]['summary']
         })
     context = dict(fields=settings.BLOCKS_SEQUENCE, tickets=tickets_context)
-    root_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    template_path = os.path.join(root_dir,'resources')
-    if is_html:
-        template = Environment(loader=FileSystemLoader(template_path)).get_template('message_daily_progress.html')
-    else:
-        template = Environment(loader=FileSystemLoader(template_path)).get_template('message_daily_progress.txt')
-    return template.render(**context)
+    ext = 'html' if is_html else 'txt'
+    return render_to_response('message_daily_progress.' + ext, context)
 
 
 def send_message(*issues, no_send=True, test=False):

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Timetracking</title>
+    <style>
+        table {
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+<h1>Report {{ from_date }} - {{ to_date }}</h1>
+<h3>
+    <a href="https://portal.yopeso.com/project/sense360_android_sync/task/list">task-list</a>
+</h3>
+
+<table>
+    <tr>
+        <th>ticket id</th>
+        <th>summary</th>
+        <th colspan="2">total time</th>
+        <th>day</th>
+        <th>hours</th>
+    </tr>
+{% for id, ticket in tickets|dictsort %}
+    <tr>
+        <td rowspan="{{ ticket['timetracking']|length + 1 }}"><a href="{{ ticket['url'] }}">{{ id }}</a></td>
+        <td rowspan="{{ ticket['timetracking']|length + 1}}">{{ ticket['summary'] }}</td>
+        <td rowspan="{{ ticket['timetracking']|length + 1}}" colspan="2">{{ ticket['total']|round(1, 'ceil') }}</td>
+    </tr>
+    {% for day, e in ticket['timetracking']|dictsort %}
+        <tr>
+            <td>{{day}}</td>
+            <td>{{e|round(1, 'ceil')}}</td>
+        </tr>
+    {% endfor %}
+{% endfor %}
+    <tr>
+        <th colspan="2">total</th>
+        <th colspan="5">{{ total|round(1, 'ceil') }}</th>
+    </tr>
+</table>
+</body>
+</html>

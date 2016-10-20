@@ -15,4 +15,8 @@ BEAR_STATUSES = {
     'waiting for review': 'Done',
     'code complete': 'Done'
 }
+ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+TEMPLATE_PATH = os.path.join(ROOT_DIR, 'resources')
+OUTPUT_PATH = os.path.join(ROOT_DIR, 'output')
+
 
