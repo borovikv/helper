@@ -1,4 +1,6 @@
+Jinja2==2.8
 jira==1.0.7
+MarkupSafe==0.23
 oauthlib==2.0.0
 python-dateutil==2.5.3
 requests==2.11.1

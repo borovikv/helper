@@ -6,7 +6,7 @@ from jira.exceptions import JIRAError
 from helper import settings
 
 
-def get_tickets_info(issues_ids, prefix=''):
+def get_tickets_info(issues_ids: str or int, prefix: str = '') -> dict:
     jira = JIRA(options={'server': settings.BASE_JIRA_URL}, basic_auth=(settings.JIRA_LOGIN, settings.JIRA_PASSWORD))
     result = {}
     for id in issues_ids:
@@ -16,6 +16,7 @@ def get_tickets_info(issues_ids, prefix=''):
             result[id] = {
                 'url': '{url}/{issue_id}'.format(url=os.path.join(settings.BASE_JIRA_URL, 'browse'), issue_id=issue_id),
                 'summary': issue.fields.summary,
+                'status': issue.fields.status.name,
                 'issue': issue
             }
         except JIRAError:

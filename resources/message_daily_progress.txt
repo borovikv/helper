@@ -1,0 +1,8 @@
+{% for field in fields %}
+{{ field }}
+{% for item in tickets[field] %}
+    {{item['url']}} - {{item['summary']}}</li>
+{% else %}
+    -
+{% endfor %}
+{% endfor %}

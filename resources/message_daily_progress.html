@@ -5,7 +5,18 @@
     <title></title>
 </head>
 <body>
-<div class="main">{text}</div>
+<div class="main">
+    {% for field in fields %}
+        <h3>{{ field }}</h3>
+        <ul>
+        {% for item in tickets[field] %}
+            <li><a href="{{item['url']}}">{{item['url']}}</a> - {{item['summary']}}</li>
+        {% else %}
+            <li>-</li>
+        {% endfor %}
+        </ul>
+    {% endfor %}
+</div>
 <br />
 <table width="800px" style="font-size: x-small; font-family: sans-serif;" bgcolor="white" border="0" cellpadding="2" cellspacing="0">
 <tbody>
