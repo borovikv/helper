@@ -13,7 +13,8 @@ BEAR_STATUSES = {
     'to do': 'Tomorrow',
     'in progress': 'In progress',
     'waiting for review': 'Done',
-    'code complete': 'Done'
+    'code complete': 'Done',
+    'done': 'Done'
 }
 ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 TEMPLATE_PATH = os.path.join(ROOT_DIR, 'resources')
